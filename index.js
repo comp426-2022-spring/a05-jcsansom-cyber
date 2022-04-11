@@ -108,8 +108,9 @@ app.get('/app/flip', (req, res, next) => {
 // Flip a bunch of coins with one body variable (number)
 app.post('/app/flip/coins/', (req, res, next) => {
   const flips = coinFlips(req.body.number)
-  const count = countFlips(flips)
-  res.status(200).json({"raw":flips,"summary":count})
+  const countT = countFlipsT(flips)
+  const countH = countFlipsH(flips)
+  res.status(200).json({'raw':flips,'tails':countT, 'heads':countH})
 })
 
 app.post('/app/flip/call/', (req, res, next) => {

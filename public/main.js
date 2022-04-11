@@ -29,9 +29,6 @@ const coin = document.getElementById("coin")
                     }
 					coin.disabled = true
 				})
-				let flip = "FLIPPED"
-				document.getElementById("coin").innerHTML = flip;
-				console.log("Coin has been flipped. Result: "+ flip)
 			}
 // Flip multiple coins and show coin images in table as well as summary results
 // Enter number and press button to activate coin flip series
@@ -53,8 +50,8 @@ async function flipCoins(event) {
         const flips = await sendFlips({ url, formData });
 
         console.log(flips);
-        document.getElementById("heads").innerHTML = "Heads: "+flips.summary.heads;
-        document.getElementById("tails").innerHTML = "Tails: "+flips.summary.tails;
+        document.getElementById("heads").innerHTML = "Heads: "+flips.heads;
+        document.getElementById("tails").innerHTML = "Tails: "+flips.tails;
     } catch (error) {
         console.log(error);
     }
