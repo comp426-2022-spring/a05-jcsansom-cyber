@@ -93,7 +93,7 @@ function countFlips(array) {
 
 app.get('/app/flip', (req, res, next) => {
   const flip = coinFlip();
-  res.status.json({'flip': flip})
+  res.status(200).json({'flip': flip})
 })
 
 app.post('/app/flip/coins/', (req, res, next) => {

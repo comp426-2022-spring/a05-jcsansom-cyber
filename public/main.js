@@ -10,7 +10,7 @@
 			// 	console.log(active_now)
 			// }
 // Button coin flip element
-const coin = document.getElementById("single")
+const coin = document.getElementById("coin")
 // Add event listener for coin button
 			coin.addEventListener("click", flipCoin)
 			function flipCoin() {
@@ -21,7 +21,12 @@ const coin = document.getElementById("single")
 				.then(function(result) {
 					console.log(result);
 					document.getElementById("result").innerHTML = result.flip;
-					document.getElementById("quarter").setAttribute("src", result.flip+".png");
+                    if (result.flip == "tails") {
+                        document.getElementById("quarter").setAttribute("src", "./assets/img/tails.png");
+                    }
+                    else {
+					    document.getElementById("quarter").setAttribute("src", "./assets/img/heads.png");
+                    }
 					coin.disabled = true
 				})
 				let flip = "FLIPPED"
