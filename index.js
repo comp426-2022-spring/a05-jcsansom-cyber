@@ -76,32 +76,51 @@ function coinFlip() {
     return Math.random() < 0.6 ? ("heads") : ("tails")
 }
 
+app.post('/app/flip', (req, res, next) => {
+  const flip = coinFlip();
+  res.status.json({'flip': flip})
+})
+
+app.get('/app/flip', (req, res, next) => {
+  const flip = coinFlip();
+  res.status.json({'flip': flip})
+})
+
 app.post('/app/flip/coins/', (req, res, next) => {
   const flips = coinFlips(req.body.number)
   const num_h = countFlipsH(flips)
   const num_t = countFlipsT(flips)
   res.status(200)
   if (num_t == 0) {
-    res.json({'raw': ret, 'summary': {'heads':num_h}});
+    res.json({'raw': flips, 'summary': {'heads':num_h}});
   }
   else if (num_h == 0) {
-    res.json({'raw': ret, 'summary': {'tails':num_t}});
+    res.json({'raw': flips, 'summary': {'tails':num_t}});
   }
   else {
-  res.json({'raw': ret, 'summary': {'tails':num_t, 'heads':num_h}});
+  res.json({'raw': flips, 'summary': {'tails':num_t, 'heads':num_h}});
   }
 })
 
 app.post('/app/flip/call/', (req, res, next) => {
   const game = flipACoin(req.body.guess)
-  res.status(200).json(game)
+    res.status(200).json(game)
 })
 
 app.get('/app/flips/:number', (req, res, next) => {
   const flips = coinFlips(req.params.number)
-  const count = countFlips(flips)
-  res.status(200).json({"raw":flips,"summary":count})
-});
+  const num_h = countFlipsH(flips)
+  const num_t = countFlipsT(flips)
+  res.status(200)
+  if (num_t == 0) {
+    res.json({'raw': flips, 'summary': {'heads':num_h}});
+  }
+  else if (num_h == 0) {
+    res.json({'raw': flips, 'summary': {'tails':num_t}});
+  }
+  else {
+  res.json({'raw': flips, 'summary': {'tails':num_t, 'heads':num_h}});
+}});
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
   const game = flipACoin(req.params.guess)
