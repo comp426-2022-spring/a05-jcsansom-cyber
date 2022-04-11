@@ -24,9 +24,9 @@ const coin = document.getElementById("single")
 					document.getElementById("quarter").setAttribute("src", result.flip+".png");
 					coin.disabled = true
 				})
-//				let flip = "FLIPPED"
-//				document.getElementById("coin").innerHTML = flip;
-//				console.log("Coin has been flipped. Result: "+ flip)
+				let flip = "FLIPPED"
+				document.getElementById("coin").innerHTML = flip;
+				console.log("Coin has been flipped. Result: "+ flip)
 			}
 // Flip multiple coins and show coin images in table as well as summary results
 // Enter number and press button to activate coin flip series
