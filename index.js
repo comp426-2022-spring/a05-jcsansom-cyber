@@ -6,7 +6,10 @@ var fs = require('fs')
 const db = require("./src/services/database.js")
 var md5 = require("md5");
 const { aggregate } = require('./src/services/database.js');
-
+// Add cors dependency
+const cors = require('cors')
+// Set up cors middleware on all endpoints
+app.use(cors())
 app.use(express.static('./public'));
 
 var args = require("minimist")(process.argv.slice(2), {
@@ -67,11 +70,32 @@ app.get('/app/', (req, res) => {
 function coinFlip() {
     return Math.random() < 0.6 ? ("heads") : ("tails")
 }
-
+/*
 app.post('/app/flip', (req, res, next) => {
   const flip = coinFlip();
   res.status.json({'flip': flip})
 })
+*/
+
+function countFlips(array) {
+  let num_h = 0;
+  let num_t = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == "heads") {
+      num_h += 1;
+    }
+    else {
+      num_t += 1;
+    }
+  }
+  if (num_h == 0) {
+    return "{ tails: " + num_t + " }";
+  }
+  if (num_t == 0) {
+    return "{ heads: " + num_h + " }";
+  }
+  return "{heads: " + num_h + ", tails: " + num_t + " }"
+}
 
 app.get('/app/flip', (req, res, next) => {
   const flip = coinFlip();
@@ -79,40 +103,27 @@ app.get('/app/flip', (req, res, next) => {
 })
 
 app.post('/app/flip/coins/', (req, res, next) => {
-  const flips = coinFlips(req.body.number)
-  const num_h = countFlipsH(flips)
-  const num_t = countFlipsT(flips)
-  res.status(200)
-  if (num_t == 0) {
-    res.json({'raw': flips, 'summary': {'heads':num_h}});
+  const ret = [];
+  for (let i = 0; i < req.params.number; i++) {
+    ret[i] = coinFlip();
   }
-  else if (num_h == 0) {
-    res.json({'raw': flips, 'summary': {'tails':num_t}});
-  }
-  else {
-  res.json({'raw': flips, 'summary': {'tails':num_t, 'heads':num_h}});
-  }
+  const count = countFlips(ret)
+  res.status(200).json({"raw":ret,"summary":count})
 })
 
 app.post('/app/flip/call/', (req, res, next) => {
   const game = flipACoin(req.body.guess)
-    res.status(200).json(game)
+  res.status(200).json(game)
 })
 
 app.get('/app/flips/:number', (req, res, next) => {
-  const flips = coinFlips(req.params.number)
-  const num_h = countFlipsH(flips)
-  const num_t = countFlipsT(flips)
-  res.status(200)
-  if (num_t == 0) {
-    res.json({'raw': flips, 'summary': {'heads':num_h}});
+  const ret = [];
+  for (let i = 0; i < req.params.number; i++) {
+    ret[i] = coinFlip();
   }
-  else if (num_h == 0) {
-    res.json({'raw': flips, 'summary': {'tails':num_t}});
-  }
-  else {
-  res.json({'raw': flips, 'summary': {'tails':num_t, 'heads':num_h}});
-}});
+  const count = countFlips(ret)
+  res.status(200).json({"raw":ret,"summary":count})
+});
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
   const game = flipACoin(req.params.guess)
