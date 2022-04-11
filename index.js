@@ -88,12 +88,6 @@ function countFlips(array) {
       num_t += 1;
     }
   }
-  if (num_h == 0) {
-    return "{ tails: " + num_t + " }";
-  }
-  if (num_t == 0) {
-    return "{ heads: " + num_h + " }";
-  }
   return "{heads: " + num_h + ", tails: " + num_t + " }"
 }
 
