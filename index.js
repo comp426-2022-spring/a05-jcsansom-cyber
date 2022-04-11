@@ -1,21 +1,13 @@
-// Place your server entry point code here
-// Serve static HTML files
-app.use(express.static('./public'));
+
 const express = require('express');
-// Make Express use its own built-in body parser to handle JSON
-app.use(express.json());
 const app = express();
 const morgan = require('morgan')
 var fs = require('fs')
 const db = require("./src/services/database.js")
 var md5 = require("md5");
 const { aggregate } = require('./src/services/database.js');
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// Add cors dependency
-const cors = require('cors')
-// Set up cors middleware on all endpoints
-app.use(cors())
+
+app.use(express.static('./public'));
 
 var args = require("minimist")(process.argv.slice(2), {
     boolean: ['debug'],           
