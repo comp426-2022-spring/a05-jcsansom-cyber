@@ -10,6 +10,7 @@ const { aggregate } = require('./src/services/database.js');
 const cors = require('cors')
 // Set up cors middleware on all endpoints
 app.use(cors())
+app.use(express.json())
 app.use(express.static('./public'));
 
 var args = require("minimist")(process.argv.slice(2), {
@@ -104,6 +105,7 @@ app.get('/app/flip', (req, res, next) => {
   res.status(200).json({'flip': flip})
 })
 
+// Flip a bunch of coins with one body variable (number)
 app.post('/app/flip/coins/', (req, res, next) => {
   const flips = coinFlips(req.body.number)
   const count = countFlips(flips)
