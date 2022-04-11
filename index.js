@@ -12,6 +12,10 @@ var md5 = require("md5");
 const { aggregate } = require('./src/services/database.js');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// Add cors dependency
+const cors = require('cors')
+// Set up cors middleware on all endpoints
+app.use(cors())
 
 var args = require("minimist")(process.argv.slice(2), {
     boolean: ['debug'],           
@@ -72,6 +76,50 @@ function coinFlip() {
     return Math.random() < 0.6 ? ("heads") : ("tails")
 }
 
+app.post('/app/flip/coins/', (req, res, next) => {
+  const flips = coinFlips(req.body.number)
+  const num_h = countFlipsH(flips)
+  const num_t = countFlipsT(flips)
+  res.status(200)
+  if (num_t == 0) {
+    res.json({'raw': ret, 'summary': {'heads':num_h}});
+  }
+  else if (num_h == 0) {
+    res.json({'raw': ret, 'summary': {'tails':num_t}});
+  }
+  else {
+  res.json({'raw': ret, 'summary': {'tails':num_t, 'heads':num_h}});
+  }
+})
+
+app.post('/app/flip/call/', (req, res, next) => {
+  const game = flipACoin(req.body.guess)
+  res.status(200).json(game)
+})
+
+app.get('/app/flips/:number', (req, res, next) => {
+  const flips = coinFlips(req.params.number)
+  const count = countFlips(flips)
+  res.status(200).json({"raw":flips,"summary":count})
+});
+
+app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
+  const game = flipACoin(req.params.guess)
+  res.status(200).json(game)
+})
+
+function flipACoin(call) {
+  let flip = coinFlip();
+  let ret = "";
+  if (call == flip) {
+    ret = "win";
+  }
+  else {
+    ret = "lose";
+  }
+  return "{ call: '" + call + "', flip: '" + flip + "', result: '" + ret + "' }";
+}
+
 function countFlipsT(array) {
     let num_h = 0;
     let num_t = 0;
@@ -100,6 +148,8 @@ function countFlipsH(array) {
   return num_h
 }
 
+
+
 app.get('/app/log/access', (req, res) => {
     if (debug == true) {
         try {
@@ -122,7 +172,7 @@ app.get('/app/log/access', (req, res) => {
             res.status(404).type("text/plain").send('404 NOT FOUND')
         }
     })
-
+/*
 app.get('/app/flip/call/heads', (req, res) => {
     let call = coinFlip();
     let ret="";
@@ -177,7 +227,7 @@ app.get('/app/flips/:number', (req, res) => {
   res.json({'raw': ret, 'summary': {'tails':num_t, 'heads':num_h}});
   }
 });
-
+*/
 app.use(function(req, res){
     res.status(404).type("text/plain").send('404 NOT FOUND')
 });
