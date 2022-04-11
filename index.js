@@ -91,18 +91,23 @@ function countFlips(array) {
   return "{heads: " + num_h + ", tails: " + num_t + " }"
 }
 
+function coinFlips(flips) {
+  const ret = [];
+  for (let i = 0; i < flips; i++) {
+    ret[i] = coinFlip();
+  }
+  return ret;
+}
+
 app.get('/app/flip', (req, res, next) => {
   const flip = coinFlip();
   res.status(200).json({'flip': flip})
 })
 
 app.post('/app/flip/coins/', (req, res, next) => {
-  const ret = [];
-  for (let i = 0; i < req.params.number; i++) {
-    ret[i] = coinFlip();
-  }
-  const count = countFlips(ret)
-  res.status(200).json({"raw":ret,"summary":count})
+  const flips = coinFlips(req.body.number)
+  const count = countFlips(flips)
+  res.status(200).json({"raw":flips,"summary":count})
 })
 
 app.post('/app/flip/call/', (req, res, next) => {
@@ -111,12 +116,9 @@ app.post('/app/flip/call/', (req, res, next) => {
 })
 
 app.get('/app/flips/:number', (req, res, next) => {
-  const ret = [];
-  for (let i = 0; i < req.params.number; i++) {
-    ret[i] = coinFlip();
-  }
-  const count = countFlips(ret)
-  res.status(200).json({"raw":ret,"summary":count})
+  const flips = coinFlips(req.params.number)
+  const count = countFlips(flips)
+  res.status(200).json({"raw":flips,"summary":count})
 });
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
