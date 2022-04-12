@@ -41,6 +41,51 @@ function guclick() {
 			// 	console.log(active_now)
 			// }
 // Button coin flip element
+const t = document.getElementById("ta")
+t.addEventListener("click", call_tails)
+function call_tails() {
+    fetch('/app/flip/call/tails/', {mode: 'cors'})
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(result) {
+        document.getElementById("call").innerHTML = "Call: Tails"
+        document.getElementById("call_img").setAttribute("style", "width:75px;height:75px;")
+        document.getElementById("call_img").setAttribute("src", "./assets/img/tails.png")
+        document.getElementById("win").innerHTML = "Result " +result.res
+        document.getElementById("result_img").setAttribute("style", "width:75px;height:75px;")
+        if (result.res == "win") {
+            document.getElementById("result_img").setAttribute("src", "./assets/img/tails.png");
+        }
+        else {
+            document.getElementById("result_img").setAttribute("src", "./assets/img/heads.png");
+        }
+    })
+}
+
+const h = document.getElementById("he")
+h.addEventListener("click", call_heads)
+function call_heads() {
+    fetch('/app/flip/call/heads/', {mode: 'cors'})
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(result) {
+        document.getElementById("call").innerHTML = "Call: Heads"
+        document.getElementById("call_img").setAttribute("style", "width:75px;height:75px;")
+        document.getElementById("call_img").setAttribute("src", "./assets/img/heads.png")
+        document.getElementById("win").innerHTML = "Result " +result.res
+        document.getElementById("result_img").setAttribute("style", "width:75px;height:75px;")
+        if (result.res == "win") {
+            document.getElementById("result_img").setAttribute("src", "./assets/img/heads.png");
+        }
+        else {
+            document.getElementById("result_img").setAttribute("src", "./assets/img/tails.png");
+        }
+    })
+}
+
+
 const coin = document.getElementById("coin")
 // Add event listener for coin button
 			coin.addEventListener("click", flipCoin)

@@ -118,6 +118,8 @@ app.post('/app/flip/call/', (req, res, next) => {
   res.status(200).json(game)
 })
 
+
+
 app.get('/app/flips/:number', (req, res, next) => {
   const flips = coinFlips(req.params.number)
   const count = countFlips(flips)
@@ -126,7 +128,7 @@ app.get('/app/flips/:number', (req, res, next) => {
 
 app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
   const game = flipACoin(req.params.guess)
-  res.status(200).json(game)
+  res.status(200).json({"res":game})
 })
 
 function flipACoin(call) {
@@ -138,7 +140,8 @@ function flipACoin(call) {
   else {
     ret = "lose";
   }
-  return "{ call: '" + call + "', flip: '" + flip + "', result: '" + ret + "' }";
+  //return "{ call: '" + call + "', flip: '" + flip + "', result: '" + ret + "' }";
+  return ret;
 }
 
 function countFlipsT(array) {
