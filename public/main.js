@@ -1,5 +1,36 @@
 // Focus div based on nav button click
-
+const home = document.getElementById("homenav")
+home.addEventListener("click", homeclick)
+function homeclick() {
+    document.getElementById("home").className = "active";
+    document.getElementById("single").className = "hidden";
+    document.getElementById("multi").className = "hidden";
+    document.getElementById("guess").className = "hidden";
+}
+const si = document.getElementById("singlenav")
+si.addEventListener("click", sclick)
+function sclick() {
+    document.getElementById("home").className = "hidden";
+    document.getElementById("single").className = "active";
+    document.getElementById("multi").className = "hidden";
+    document.getElementById("guess").className = "hidden";
+}
+const mu = document.getElementById("multinav")
+mu.addEventListener("click", muclick)
+function muclick() {
+    document.getElementById("home").className = "hidden";
+    document.getElementById("single").className = "hidden";
+    document.getElementById("multi").className = "active";
+    document.getElementById("guess").className = "hidden";
+}
+const gu= document.getElementById("guessnav")
+gu.addEventListener("click", guclick)
+function guclick() {
+    document.getElementById("home").className = "hidden";
+    document.getElementById("single").className = "hidden";
+    document.getElementById("multi").className = "hidden";
+    document.getElementById("guess").className = "active";
+}
 // Flip one coin and show coin image to match result when button clicked
 // Event listener for whatever is being clicked 
 //			document.addEventListener("click", activeNow);
