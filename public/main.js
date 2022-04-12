@@ -58,7 +58,7 @@ const coin = document.getElementById("coin")
                     else {
 					    document.getElementById("quarter").setAttribute("src", "./assets/img/heads.png");
                     }
-					coin.disabled = true
+					//coin.disabled = true
 				})
 			}
 // Flip multiple coins and show coin images in table as well as summary results
