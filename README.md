@@ -98,19 +98,27 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-
+curl http://localhost:5000/app/flips/:number
 ```
 
 #### Response body
 
 ```
-
+{"raw":["heads","tails","tails","tails","heads","heads"],"summary":"{heads: 3, tails: 3 }"}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 91
+ETag: W/"5b-+J0YyUe4GU0SW1fQgQA2e/foWaw"
+Date: Tue, 12 Apr 2022 00:50:27 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flip/coin/ (GET)
