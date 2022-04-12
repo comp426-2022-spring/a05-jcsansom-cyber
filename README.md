@@ -126,19 +126,27 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-
+curl http://localhost:5000/app/flip/coin
 ```
 
 #### Response body
 
 ```
-
+404 NOT FOUND
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: text/plain; charset=utf-8
+Content-Length: 13
+ETag: W/"d-9cDc1x9S0CgmdX/8mukTB8yQ/hY"
+Date: Tue, 12 Apr 2022 00:52:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flip/call/:guess/ (GET)
