@@ -154,19 +154,27 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-
+curl http://localhost:3000/app/flip/call/heads
 ```
 
 #### Response body
 
 ```
-
+{"res":"win"}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 13
+ETag: W/"d-FIIIQi6p2zQBvcjymO+9YRjYg2w"
+Date: Tue, 12 Apr 2022 00:53:50 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flip/call/ (POST)
