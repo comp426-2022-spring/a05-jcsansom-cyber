@@ -76,13 +76,21 @@ curl http://localhost:5000/app/flip/
 #### Response body
 
 ```
-
+{"flip":"heads"} or {"flip":"tails"}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-VYm8Bk1/RW8RGhDXdTwBYk6lbGE"
+Date: Tue, 12 Apr 2022 00:48:49 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flips/:number/ (GET)
